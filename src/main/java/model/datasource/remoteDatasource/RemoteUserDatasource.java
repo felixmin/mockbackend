@@ -29,7 +29,7 @@ public class RemoteUserDatasource implements UserDatasource {
     public String login() throws Exception {
         Response res;
         try {
-            res = api.request(url);
+            res = api.getRequestOpen(url);
         } catch (Exception e) {
             throw new Exception("hi"); // throw adequate exceptions
         }

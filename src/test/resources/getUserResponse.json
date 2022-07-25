@@ -1,0 +1,11 @@
+{
+  "role": "STUDENT",
+  "id": "d5acac7e-78d2-440d-953e-13132f3f0ccf",
+  "firstName": "Olf",
+  "lastName": "Olf",
+  "password": "asdfasdf",
+  "mail": "gandalf22232@student.kit.edu",
+  "active": false,
+  "degrees": null,
+  "uni_id": "4e452928-5f57-4ddd-a5c9-36c5787b3afa"
+}

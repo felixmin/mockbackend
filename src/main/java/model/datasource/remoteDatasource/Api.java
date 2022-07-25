@@ -19,33 +19,45 @@ public class Api {
 
     }
 
-    public Response request(String url) throws ExecutionException, InterruptedException {
-        OkHttpClient client = new OkHttpClient.Builder().build();
-
+    public Response getRequestOpen(String url) throws ExecutionException, InterruptedException {
         Request request = new Request.Builder()
             .url(url)
             .get()
             .build();
-        OkHttpResponseFuture callback = new OkHttpResponseFuture();
 
-        client.newCall(request).enqueue(callback);
-
-        return callback.future.get();
+        return buildOpenRequest(request);
     }
 
-    public Response requestProtected(String url, String mail, String psw) throws ExecutionException, InterruptedException {
+    public Response getRequestProtected(String url, String mail, String psw)
+            throws ExecutionException, InterruptedException {
+        Request request = new Request.Builder()
+            .url(url)
+            .get()
+            .build();
+
+        return buildProtectedRequest(request, mail, psw);
+    }
+
+
+
+    private Response buildOpenRequest(Request request) throws ExecutionException, InterruptedException {
+        OkHttpClient client = new OkHttpClient.Builder().build();
+        return sendRequest(client, request);
+    }
+
+    private Response buildProtectedRequest(Request request, String mail, String psw)
+            throws ExecutionException, InterruptedException {
         OkHttpClient client = new OkHttpClient.Builder()
             .addInterceptor(new AuthInterceptor(mail, psw))
             .build();
+        return sendRequest(client, request);
+    }
 
-        Request request = new Request.Builder()
-            .url(url)
-            .get()
-            .build();
+
+
+    private Response sendRequest(OkHttpClient client, Request request) throws ExecutionException, InterruptedException {
         OkHttpResponseFuture callback = new OkHttpResponseFuture();
-
         client.newCall(request).enqueue(callback);
-
         return callback.future.get();
     }
 }
